@@ -1,0 +1,9 @@
+Ticket ID,Priority,System Message,Assigned Employee
+TICK-1042,ERROR,Database connection timeout dropped,EMP1244
+MALFORMED-LOG,AUDIT_REQUIRED,[Line 2] Raw Data: DEBUG   [pid:1102] Verification loop initiated inside subsystem - User:EMP9901,SYSTEM_ADMIN
+TICK-8821,WARNING,High memory usage detected on core node,EMP4511
+MALFORMED-LOG,AUDIT_REQUIRED,[Line 4] Raw Data: CRITICAL SYSTEM FAILURE DISK UNREADABLE,SYSTEM_ADMIN
+TICK-9901,INFO,Routine backup completed successfully,EMP1004
+MALFORMED-LOG,AUDIT_REQUIRED,[Line 6] Raw Data: ERROR   [pid:abc3] Invalid payload structure received - User:EMP4402,SYSTEM_ADMIN
+TICK-3321,ERROR,API Gateway failed to respond to ping,EMP1120
+MALFORMED-LOG,AUDIT_REQUIRED,[Line 8] Raw Data: WARNING [pid:2291] SSL Certificate expiring in less than 30 days - User:EMP,SYSTEM_ADMIN

@@ -1,67 +1,103 @@
-# check if folders are in the directory
-# 1.scan the directory regardless of linux or MacOs
 import os
-# 2.regx pattern
 import re
-# 3. CSV
 import csv
+import openpyxl
+from openpyxl.utils import get_column_letter
+
+# 1. The Regular Expression verification rule
+TICKET_PATTERN = r"^(ERROR|DEBUG|INFO|WARNING)\s+\[pid:(\d+)\]\s+(.*?)\s+-\s+User:(EMP\d{4})$"
 
 
-# The Gatekeeper Pattern with 4 explicit capturing groups
-TICKET_PATTERN = r"^(ERROR|WARNING|INFO)\s+\[pid:(\d+)\]\s+(.*?)\s+-\s+User:(EMP\d{4})$"
-def sanitize_and_route_tickets(input_dir, output_csv_path):
-    """Crawls a directory, streams text files, applies regular expressions, and creates a CSV grid."""
-    parsed_tickets = []
-    # if directory exist
+# 2. NEW MODIFICATION: The auto-fitting Excel layout manager
+def convert_csv_to_beautiful_excel(csv_path, excel_path):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "IT Dashboard"
+
+    # Ingest the CSV table data
+    with open(csv_path, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            ws.append(row)
+
+    # Calculate text length and automatically expand columns
+    for col in ws.columns:
+        max_len = 0
+        col_letter = get_column_letter(col[0].column)
+
+        for cell in col:
+            if cell.value:
+                max_len = max(max_len, len(str(cell.value)))
+
+        # Add comfort padding to prevent layout clipping
+        ws.column_dimensions[col_letter].width = max(max_len + 3, 12)
+
+    wb.save(excel_path)
+    print(f"✨ Auto-scaled Excel dashboard generated at: {excel_path}")
+
+
+# 3. Your Unified Core Router Function
+def generate_unified_dashboard(input_dir, output_csv, output_excel):
     if not os.path.exists(input_dir):
-        print(f" Error: The director '{input_dir}' was not found.")
+        print(f"❌ Error: The input directory '{input_dir}' does not exist.")
         return
 
-    # Directory Traversal
-    for filename in os.listdir(input_dir):
-        if filename.endswith(".log") or filename.endswith(".txt"):# this reads the directory for any log or txt
-            file_path = os.path.join(input_dir, filename) # ready to open folder and file
+    csv_headers = ["Ticket ID", "Priority", "System Message", "Assigned Employee"]
+    total_lines = 0
+    clean_lines = 0
+    malformed_lines = 0
 
-            #opening file line by line
-            with open(file_path, "r") as file:
-                for line_num, line in enumerate(file, 1):
-                    clean_line = line.strip()
+    print("📊 COMPILING UNIFIED STRUCTURED IT DASHBOARD...")
 
-                    # Run the regex scanner
-                    match = re.match(TICKET_PATTERN, clean_line)
+    with open(output_csv, "w", newline="", encoding="utf-8") as csv_out:
+        writer = csv.writer(csv_out)
+        writer.writerow(csv_headers)
 
-                    if match:
-                        # ROUTE A: The Clean Path (Extract groups 1, 2, 3, 4)
-                        parsed_tickets.append({
-                            "Ticket ID": f"TICK-{match.group(2)}",
-                            "Priority": match.group(1),
-                            "System Message": match.group(3),
-                            "Assigned Employee": match.group(4)
-                        })
-                    else:
-                        # ROUTE B: The Audit Path (Catches all dirty or noise rows!)
-                        parsed_tickets.append({
-                            "Ticket ID": "MALFORMED-LOG",
-                            "Priority": "AUDIT_REQUIRED",
-                            "System Message": f"[Line {line_num}] Raw Data: {clean_line}",
-                            "Assigned Employee": "SYSTEM_ADMIN"
-                        })
+        for filename in os.listdir(input_dir):
+            if filename.endswith(".log"):
+                file_path = os.path.join(input_dir, filename)
 
-                        # Output layer Mapping
-                        fields = ["Ticket ID", "Priority", "System Message", "Assigned Employee"]
+                with open(file_path, "r", encoding="utf-8") as log_file:
+                    for line_num, line in enumerate(log_file, 1):
+                        clean_line = line.strip()
+                        if not clean_line:
+                            continue
 
-                        with open(output_csv_path,"w", newline="") as csv_file:
-                            writer = csv.DictWriter(csv_file, fieldnames=fields)
-                            writer.writeheader()
-                            writer.writerows(parsed_tickets)
+                        total_lines += 1
+                        match = re.match(TICKET_PATTERN, clean_line)
 
-                print(f"📊 Process Complete! 100% of data audited. Dashboard built at: '{output_csv_path}'")
+                        if match:
+                            clean_lines += 1
+                            writer.writerow([
+                                f"TICK-{match.group(2)}",
+                                match.group(1),
+                                match.group(3),
+                                match.group(4)
+                            ])
+                        else:
+                            malformed_lines += 1
+                            writer.writerow([
+                                "MALFORMED-LOG",
+                                "AUDIT_REQUIRED",
+                                f"[Line {line_num}] Raw Data: {clean_line}",
+                                "SYSTEM_ADMIN"
+                            ])
+
+    print("=" * 60)
+    print(f"🏁 CSV Generation Complete: {output_csv}")
+    print(f"  ↳ Total Records Evaluated: {total_lines}")
+    print(f"  ↳ Clean Parsed Logs:       {clean_lines}")
+    print(f"  ↳ Malformed Logs Flagged:   {malformed_lines}")
+    print("=" * 60)
+
+    # Automatically switch on the Excel modification right here
+    convert_csv_to_beautiful_excel(output_csv, output_excel)
 
 
+# 4. Global Target Configuration Block
 if __name__ == "__main__":
-    # Define our functional runtime paths
-    intake_directory = "unprocessed_tickets"
-    final_dashboard_report = "structured_it_dashboard.csv"
+    INPUT_FOLDER = "unprocessed_tickets"
+    OUTPUT_CSV = "structured_it_dashboard.csv"
+    OUTPUT_EXCEL = "structured_it_dashboard.xlsx"
 
-    # Fire up the automation pipeline engine
-    sanitize_and_route_tickets(intake_directory, final_dashboard_report)
+    generate_unified_dashboard(INPUT_FOLDER, OUTPUT_CSV, OUTPUT_EXCEL)

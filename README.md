@@ -8,12 +8,15 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
+<p align="center">
+    <img src="ScreenShots/exceloutput.png" width="900">
+</p>
 
 # 📖 Overview
 
-IT systems generate large volumes of log data that often exist as unstructured text. While these logs contain valuable information, manually reviewing and organizing them can be repetitive and time-consuming.
+IT systems generate large volumes of log data every day. While these logs contain valuable operational information, they are often stored as unstructured text, making them difficult to review, organize, and analyze manually.
 
-This project automates the process of parsing raw IT ticket logs into structured reports. Using Python and Regular Expressions, it extracts key information, validates log entries, identifies malformed records, and exports the results into CSV and formatted Excel reports for easier analysis and reporting.
+This project automates the transformation of raw IT ticket logs into structured reports. Using Python and Regular Expressions, it extracts key information, validates log entries, identifies malformed records, and exports the results into both CSV and formatted Excel reports for easier analysis and reporting.
 
 ---
 
@@ -25,11 +28,12 @@ This project automates the process of parsing raw IT ticket logs into structured
   - Ticket ID
   - Priority Level
   - System Message
-  - Employee ID
-- ⚠️ Identifies malformed log entries
+  - Assigned Employee
+- ⚠️ Detects malformed log entries
+- 📝 Preserves malformed records for auditing
 - 📄 Generates structured CSV reports
-- 📊 Automatically creates formatted Excel dashboards
-- 📏 Auto-adjusts Excel column widths
+- 📊 Automatically creates formatted Excel reports
+- 📏 Automatically adjusts Excel column widths
 - 📈 Displays processing statistics
 
 ---
@@ -38,8 +42,8 @@ This project automates the process of parsing raw IT ticket logs into structured
 
 - Python 3
 - Regular Expressions (`re`)
-- CSV
 - OpenPyXL
+- CSV Module
 - OS Module
 - File Handling
 
@@ -59,6 +63,12 @@ python-log-processing-pipeline/
 │
 ├── structured_it_dashboard.csv
 ├── structured_it_dashboard.xlsx
+│
+├── ScreenShots/
+│   ├── incominglog.png
+│   ├── csv data.png
+│   ├── csv_text.png
+│   └── exceloutput.png
 │
 ├── LICENSE
 └── README.md
@@ -81,39 +91,65 @@ Regular Expression Parser
  │               │
  ▼               ▼
 Valid Logs   Malformed Logs
- │
- ▼
-Structured Data
- │
- ▼
-CSV Report
- │
- ▼
-Formatted Excel Dashboard
+ │               │
+ └───────┬───────┘
+         ▼
+ Structured Dataset
+         │
+         ▼
+ CSV Report
+         │
+         ▼
+ Excel Dashboard
 ```
 
 ---
 
 # 📄 Sample Input
 
-```text
-ERROR [pid:1458] Database connection failed - User:EMP1024
+The application processes raw IT ticket logs stored in the **incoming_tickets.log** file.
 
-WARNING [pid:3189] Disk usage exceeded threshold - User:EMP1102
-
-INFO [pid:2231] User successfully authenticated - User:EMP1056
-```
+<p align="center">
+    <img src="ScreenShots/incominglog.png" width="700" alt="Incoming Ticket Log">
+</p>
 
 ---
 
 # 📊 Output
 
-The application automatically generates:
+After processing the log file, the application automatically generates two structured reports:
 
 - **structured_it_dashboard.csv**
 - **structured_it_dashboard.xlsx**
 
-These reports organize extracted ticket information into a clean, structured format that is easier to review, analyze, and share.
+## 📄 CSV Output
+
+The parsed ticket information is exported into a structured CSV file for reporting, analysis, or further processing.
+
+### CSV Data Table & Raw CSV
+
+<p align="center">
+    <img src="ScreenShots/csv data.png" width="430" alt="CSV Data Table">
+    <img src="ScreenShots/csv_text.png" width="530" alt="Raw CSV File">
+</p>
+
+---
+
+## 📊 Excel Dashboard
+
+The same structured data is automatically exported into a formatted Excel workbook with adjusted column widths for improved readability.
+
+<p align="center">
+    <img src="ScreenShots/exceloutput.png" width="600" alt="Excel Dashboard">
+</p>
+
+---
+
+# 🔍 Malformed Log Handling
+
+Rather than silently discarding malformed log entries, the application preserves them by assigning the status **AUDIT_REQUIRED**.
+
+This allows users to identify records that require manual inspection while ensuring potentially important information is not lost during processing.
 
 ---
 
@@ -137,7 +173,7 @@ cd python-log-processing-pipeline
 pip install openpyxl
 ```
 
-### Run the project
+### Run the application
 
 ```bash
 python formatted_ticket_router.py
@@ -147,17 +183,17 @@ python formatted_ticket_router.py
 
 # 💡 Skills Demonstrated
 
-This project showcases practical software engineering skills, including:
+This project demonstrates practical software engineering skills including:
 
 - Python Programming
 - Automation
 - Regular Expressions (Regex)
 - File Handling
 - Directory Traversal
-- CSV Processing
-- Excel Automation
 - Data Validation
 - Data Parsing
+- CSV Processing
+- Excel Automation (OpenPyXL)
 - Report Generation
 - Problem Solving
 
@@ -171,33 +207,23 @@ Building this project strengthened my understanding of:
 - Automating repetitive workflows with Python
 - Reading and writing files
 - Working with CSV datasets
-- Creating Excel reports using OpenPyXL
-- Organizing Python code into reusable functions
-- Building an end-to-end data processing workflow
-
----
-
-
----
+- Creating formatted Excel reports using OpenPyXL
 
 # 🎓 Inspiration
 
-This project was inspired by the Python automation concepts I learned while completing the **Google IT Automation with Python Professional Certificate**. It allowed me to apply those concepts by building a practical automation tool for processing IT ticket logs and generating structured reports.
+This project was inspired by the automation concepts I learned while completing the **Google IT Automation with Python Professional Certificate**.
+
+I wanted to apply those concepts by building a practical Python application that automates the processing of IT ticket logs and generates structured reports for easier analysis.
 
 ---
 
 # 👨‍💻 Author
 
-**Kwadwo Larbi**
+## Kwadwo Larbi
 
-Aspiring Software Engineer | Python Developer | Automation Enthusiast
+**Aspiring Software Engineer | Python Developer | Automation Enthusiast**
 
-I'm passionate about building Python applications that automate repetitive tasks, organize data, and solve practical problems. I'm continuously expanding my software engineering skills by creating hands-on projects and preparing for internship opportunities.
+I'm passionate about building Python applications that automate repetitive tasks, organize data, and solve practical problems. I enjoy applying programming concepts to real-world scenarios while continuously expanding my skills through hands-on projects.
 
 ---
-
-# ⭐ Support
-
-If you found this project interesting or useful, consider giving it a ⭐ on GitHub.
-
-Feedback, suggestions, and contributions are always welcome.
+⭐ If you found this project interesting, feel free to leave a star on the repository.

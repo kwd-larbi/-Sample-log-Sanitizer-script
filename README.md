@@ -159,6 +159,11 @@ Rather than silently discarding malformed log entries, the application preserves
 This allows users to identify records that require manual inspection while ensuring potentially important information is not lost during processing.
 
 ---
+# 🧪 Development Notes
+
+The repository includes a **regexpatterntest.py** script that was used during development to test and refine the Regular Expression patterns before integrating them into the main processing pipeline.
+
+---
 
 # 🚀 Getting Started
 

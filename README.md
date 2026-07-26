@@ -54,25 +54,45 @@ This project automates the transformation of raw IT ticket logs into structured 
 ```text
 python-log-processing-pipeline/
 │
-├── formatted_ticket_router.py
-├── ticket_router.py
-├── regexpatterntest.py
+├── ticket_router.py              # Core ticket parsing and routing logic
+├── formatted_ticket_router.py    # Final pipeline and report generation
+├── regexpatterntest.py           # Regex testing and validation
 │
 ├── unprocessed_tickets/
-│   └── incoming_tickets.log
+│   └── incoming_tickets.log        # Raw IT ticket log input
 │
-├── structured_it_dashboard.csv
-├── structured_it_dashboard.xlsx
+├── structured_it_dashboard.csv     # Generated CSV report
+├── structured_it_dashboard.xlsx    # Generated Excel report
 │
 ├── ScreenShots/
-│   ├── incominglog.png
-│   ├── csv data.png
-│   ├── csv_text.png
-│   └── exceloutput.png
+│   ├── incominglog.png              # Raw ticket log screenshot
+│   ├── csv data.png                 # CSV structured data screenshot
+│   ├── csv_text.png                 # Raw CSV output screenshot
+│   └── exceloutput.png              # Excel dashboard screenshot
 │
 ├── LICENSE
 └── README.md
 ```
+# 🧩 Project Components
+
+The project was developed in multiple stages:
+
+### `ticket_router.py`
+The original core processing script responsible for:
+- Reading raw IT ticket logs
+- Applying Regular Expression patterns
+- Extracting important fields
+- Routing and organizing ticket information
+
+### `formatted_ticket_router.py`
+The final pipeline script that combines and improves the processing workflow by:
+- Integrating the ticket parsing logic
+- Structuring the extracted data
+- Generating CSV reports
+- Creating formatted Excel outputs using OpenPyXL
+
+### `regexpatterntest.py`
+A testing script used during development to validate and refine Regular Expression patterns before applying them to the main processing workflow.
 
 ---
 
@@ -159,11 +179,6 @@ Rather than silently discarding malformed log entries, the application preserves
 This allows users to identify records that require manual inspection while ensuring potentially important information is not lost during processing.
 
 ---
-# 🧪 Development Notes
-
-The repository includes a **regexpatterntest.py** script that was used during development to test and refine the Regular Expression patterns before integrating them into the main processing pipeline.
-
----
 
 # 🚀 Getting Started
 
@@ -220,7 +235,10 @@ Building this project strengthened my understanding of:
 - Reading and writing files
 - Working with CSV datasets
 - Creating formatted Excel reports using OpenPyXL
-
+- Exporting structured data into multiple file formats
+- Organizing Python programs into reusable components
+- Building an end-to-end log processing workflow
+  
 # 🎓 Inspiration
 
 This project was inspired by the automation concepts I learned while completing the **Google IT Automation with Python Professional Certificate**.
@@ -237,5 +255,4 @@ I wanted to apply those concepts by building a practical Python application that
 
 I'm passionate about building Python applications that automate repetitive tasks, organize data, and solve practical problems. I enjoy applying programming concepts to real-world scenarios while continuously expanding my skills through hands-on projects.
 
----
-⭐ If you found this project interesting, feel free to leave a star on the repository.
+

@@ -128,11 +128,18 @@ The parsed ticket information is exported into a structured CSV file for reporti
 
 ### CSV Data Table & Raw CSV
 
-<p align="center">
-    <img src="ScreenShots/csv data.png" width="430" alt="CSV Data Table">
-    <img src="ScreenShots/csv_text.png" width="530" alt="Raw CSV File">
-</p>
-
+<table align="center">
+  <tr>
+    <td align="center">
+      <strong>CSV Data Table</strong><br><br>
+      <img src="ScreenShots/csv data.png" width="430" alt="CSV Data Table">
+    </td>
+    <td align="center">
+      <strong>Raw CSV File</strong><br><br>
+      <img src="ScreenShots/csv_text.png" width="430" alt="Raw CSV File">
+    </td>
+  </tr>
+</table>
 ---
 
 ## 📊 Excel Dashboard
